@@ -6,6 +6,12 @@ class Display {
         this.valorActual = ""
         this.valorAnterior = ""
         this.tipoOperacion = undefined
+        this.signos = {
+            sumar: '+',
+            dividir: '/',
+            multiplicar: '*',
+            restar: '-'
+        }
     }
 
     borrar() {
@@ -28,15 +34,15 @@ class Display {
 
     imprimirValorActual() {
         this.displayValorActual.textContent = this.valorActual
-        this.displayValorAnterior.textContent = this.valorAnterior
+        this.displayValorAnterior.textContent = `${this.valorAnterior} ${this.signos[this.tipoOperacion] || ''}`
     }
 
     calcular() {
         const valorAnterior = parseFloat(this.valorAnterior)
         const valorActual = parseFloat(this.valorActual)
-
         if (isNaN(valorActual) || isNaN(valorAnterior)) return
         this.valorActual = this.calculadora[this.tipoOperacion](valorAnterior, valorActual)
+
     }
 
     computar(tipo) {
@@ -44,6 +50,6 @@ class Display {
         this.tipoOperacion = tipo
         this.valorAnterior = this.valorActual || this.valorAnterior
         this.valorActual = ""
-        this.imprimirValores();
+        this.imprimirValorActual();
     }
 }
